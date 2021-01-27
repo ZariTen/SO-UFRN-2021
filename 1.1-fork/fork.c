@@ -9,13 +9,17 @@ int anoPassados(const time_t start){
 }
 
 int main(){
-    time_t start,stop;
+    time_t start;
+    time_t hora = time(NULL);
+    struct tm tm = *localtime(&hora);
     start = time(NULL);
     int year = 0;
 
 
     sleep(14);
-    printf("Nascimento do Filho1. Ano: %ld \n", anoPassados(start));
+    printf("%ld \n",anoPassados(start));
+    printf("Nascimento do Filho1. Hora: %ld:%ld:%ld \n", tm.tm_hour,tm.tm_min,tm.tm_sec);
+
     int p = fork();
     if (p > 0){ //Pai
         int pp = fork(); //Criar Filho2
