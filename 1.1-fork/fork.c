@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <time.h>
-#include <signal.h>
+#include <stdlib.h>
 #include <sys/wait.h>
 
 int anoPassados(const time_t start){
@@ -11,59 +11,82 @@ int anoPassados(const time_t start){
 }
 
 int main(){
-    pid_t wpid;
-    time_t start;
+    //Para horario de nascimento
     time_t hora = time(0);
-    struct tm tm = *localtime(&hora);
-    start = time(NULL);
-    int year = 0;
-
+    struct tm tm = *localtime(&hora); //Para nascimentos
+    struct tm dm = *localtime(&hora); //Para mortes
+    //"Nascimento" do pai, time_t xIdade são usados para saber quando x nasceu
+    time_t paiIdade = time(0);
 
     sleep(14);
     hora = time(0);
     tm = *localtime(&hora);
-    printf("Nascimento do Filho1. Hora: %ld:%ld:%ld Data: %ld/%ld/%ld\n", tm.tm_hour,tm.tm_min,tm.tm_sec,tm.tm_mday,tm.tm_mon+1,tm.tm_year+1900);
-
+    printf("Nascimento do Filho1. Hora: %ld:%ld:%ld \n", tm.tm_hour,tm.tm_min,tm.tm_sec);
+    time_t filho1Idade = time(0);
     int p = fork();
     
     if (p > 0){ //Pai
         sleep(2);
         hora = time(0);
         tm = *localtime(&hora);
-        printf("Nascimento do Filho2. Hora: %ld:%ld:%ld Data: %ld/%ld/%ld\n", tm.tm_hour,tm.tm_min,tm.tm_sec,tm.tm_mday,tm.tm_mon+1,tm.tm_year+1900);
+        printf("Nascimento do Filho2. Hora: %ld:%ld:%ld\n", tm.tm_hour,tm.tm_min,tm.tm_sec);
         int pp = fork(); //Criar Filho2
+        time_t filho2Idade = time(0);
 
         if(pp == 0){ //Filho2
             sleep(14);
             hora = time(0);
             tm = *localtime(&hora);
-            printf("Nascimento do Neto2. Hora: %ld:%ld:%ld Data: %ld/%ld/%ld\n", tm.tm_hour,tm.tm_min,tm.tm_sec,tm.tm_mday,tm.tm_mon+1,tm.tm_year+1900);
+            printf("Nascimento do Neto2. Hora: %ld:%ld:%ld\n", tm.tm_hour,tm.tm_min,tm.tm_sec);
             int pf2 = fork(); //Criar Neto2
+            time_t neto2Idade = time(0);
 
             if (pf2 == 0){ //Neto2
                 sleep(18);
-                kill(pf2,SIGTERM);
+                hora = time(0);
+                tm = *localtime(&neto2Idade);
+                dm = *localtime(&hora);
+                printf("Morte Neto2. Anos vividos: %ld , Nascimento: %ld:%ld:%ld,Morte: %ld:%ld:%ld \n",anoPassados(neto2Idade),tm.tm_hour,tm.tm_min,tm.tm_sec, dm.tm_hour,dm.tm_min,dm.tm_sec);
+                exit(0);
 
             }
             sleep(16);
-            kill(pp,SIGTERM);
+            hora = time(0);
+            tm = *localtime(&filho2Idade);
+            dm = *localtime(&hora);
+            printf("Morte Filho2. Anos vividos: %ld , Nascimento: %ld:%ld:%ld,Morte: %ld:%ld:%ld \n",anoPassados(filho2Idade),tm.tm_hour,tm.tm_min,tm.tm_sec, dm.tm_hour,dm.tm_min,dm.tm_sec);
+            exit(0);
         }
-        while ((wpid = wait(0))>0); //Esperar até que todos os filhos tenham morrido
-
+        sleep(44);
+        hora = time(0);
+        tm = *localtime(&paiIdade);
+        dm = *localtime(&hora);
+        printf("Morte do Pai. Anos vividos: %ld , Nascimento: %ld:%ld:%ld,Morte: %ld:%ld:%ld \n",anoPassados(paiIdade),tm.tm_hour,tm.tm_min,tm.tm_sec, dm.tm_hour,dm.tm_min,dm.tm_sec);
+        exit(0);
     }
     
     if (p == 0){ //Filho
         sleep(12);
         hora = time(0);
         tm = *localtime(&hora);
-        printf("Nascimento do Neto1. Hora: %ld:%ld:%ld Data: %ld/%ld/%ld\n", tm.tm_hour,tm.tm_min,tm.tm_sec,tm.tm_mday,tm.tm_mon+1,tm.tm_year+1900);
+        printf("Nascimento do Neto1. Hora: %ld:%ld:%ld\n", tm.tm_hour,tm.tm_min,tm.tm_sec);
         int pf = fork();
+        time_t neto1Idade = time(0);
 
         if (pf == 0){ //Neto1
             sleep(12);
+            hora = time(0);
+            tm = *localtime(&neto1Idade);
+            dm = *localtime(&hora);
+            printf("Morte Neto1. Anos vividos: %ld, Nascimento: %ld:%ld:%ld, Nascimento: %ld:%ld:%ld\n",anoPassados(neto1Idade),tm.tm_hour,tm.tm_min,tm.tm_sec, dm.tm_hour,dm.tm_min,dm.tm_sec);
+            exit(0);
         }
         sleep(18);
-        kill(p,SIGTERM);
+        hora = time(0);
+        tm = *localtime(&filho1Idade);
+        dm = *localtime(&hora);
+        printf("Morte Filho1. Anos vividos: %ld, Nascimento: %ld:%ld:%ld, Morte: %ld:%ld:%ld \n",anoPassados(filho1Idade),tm.tm_hour,tm.tm_min,tm.tm_sec, dm.tm_hour,dm.tm_min,dm.tm_sec);
+        exit(0);
 
     }
     return 0;
