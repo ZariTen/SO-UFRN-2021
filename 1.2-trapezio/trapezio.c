@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define PI 3.1416
+#define PI 3.14159265358979323846
 
 int n,t; // a-b: inicio e fim da função | n: numero trapezios | t: numero threads
 double a,b;
@@ -28,14 +28,31 @@ void* trap_area(void *idThread){
 
     local_b = local_a + b/t;
 
-    printf("Thread %d: a=%f | b=%f | n=%f \n",(int)(size_t)idThread,local_a,local_b,local_n);
-
-
     double h = (local_b-local_a)/local_n;
     double area_total = (f1(local_a)+f1(local_b))/2;
     for(int i = 1; i < local_n; i++){
         double x_i = local_a + i*h;
         area_total += f1(x_i);
+    }
+    area_total = h*area_total;
+    memoria[(int)(size_t)idThread] = area_total;
+
+    pthread_exit(NULL);
+}
+
+void* trap_area_f2(void *idThread){
+    double local_a,local_b;
+    double local_n = n/t;
+
+    local_a = a/t * (int)(size_t)idThread + b/t *(int)(size_t) idThread;
+
+    local_b = local_a + b/t;
+
+    double h = (local_b-local_a)/local_n;
+    double area_total = (f2(local_a)+f2(local_b))/2;
+    for(int i = 1; i < local_n; i++){
+        double x_i = local_a + i*h;
+        area_total += f2(x_i);
     }
     area_total = h*area_total;
     memoria[(int)(size_t)idThread] = area_total;
@@ -59,7 +76,6 @@ int main(int argc, char *argv[]){
     b = 10.0;
     for (i = 0; i < t; i++){
         int pcreate = pthread_create(&threads[i],NULL,trap_area,(void*)(size_t)i);
-
         if(pcreate != 0){
             return 1;
         }
@@ -73,6 +89,25 @@ int main(int argc, char *argv[]){
     for(int i = 0; i < t; i++){
         resultado += memoria[i];
     }
-    printf("Soma total: %f \n",resultado);
+    printf("Função 1: %f \n",resultado);
 
+    //Função 2
+    a = 0.0;
+    b = 2.0 * PI;
+    for (i = 0; i < t; i++){
+        int pcreate = pthread_create(&threads[i],NULL,trap_area_f2,(void*)(size_t)i);
+        if(pcreate != 0){
+            return 1;
+        }
+    }
+
+    for(i = 0; i <t; i++){
+        pthread_join(threads[i],&thread_return);
+    }
+
+    resultado = 0;
+    for(int i = 0; i < t; i++){
+        resultado += memoria[i];
+    }
+    printf("Função 2: %f \n",resultado);
 }

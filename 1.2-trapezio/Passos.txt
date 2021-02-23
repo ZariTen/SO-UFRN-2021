@@ -1,0 +1,6 @@
+Sistema Operacional: Linux 64 bits (Fedora 33)
+Compilador: gcc 10.2.1
+Comandos para a execução:
+  gcc trapezio.c -o prog -pthread -lm
+  ./prog 6 120
+  ./prog 7 200
