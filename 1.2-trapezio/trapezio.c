@@ -6,7 +6,8 @@
 
 #define PI 3.1416
 
-int a,b,n,t; // a-b: inicio e fim da função | n: numero trapezios | t: numero threads
+int n,t; // a-b: inicio e fim da função | n: numero trapezios | t: numero threads
+double a,b;
 double memoria[50];
 
 //Limites a=0.0 b=10.0
@@ -20,9 +21,15 @@ double f2(double x){
 }
 
 void* trap_area(void *idThread){
-    int local_a,local_b;
-    double local_n = t/n;
-    printf("Thread %d \n",(int)(size_t)idThread);
+    double local_a,local_b;
+    double local_n = n/t;
+
+    local_a = a/t * (int)(size_t)idThread + b/t *(int)(size_t) idThread;
+
+    local_b = local_a + b/t;
+
+    printf("Thread %d: a=%f | b=%f | n=%f \n",(int)(size_t)idThread,local_a,local_b,local_n);
+
 
     double h = (local_b-local_a)/local_n;
     double area_total = (f1(local_a)+f1(local_b))/2;
@@ -47,6 +54,9 @@ int main(int argc, char *argv[]){
     int i;
     void *thread_return;
 
+    //Função 1
+    a = 0.0;
+    b = 10.0;
     for (i = 0; i < t; i++){
         int pcreate = pthread_create(&threads[i],NULL,trap_area,(void*)(size_t)i);
 
@@ -58,5 +68,11 @@ int main(int argc, char *argv[]){
     for(i = 0; i <t; i++){
         pthread_join(threads[i],&thread_return);
     }
+
+    double resultado = 0;
+    for(int i = 0; i < t; i++){
+        resultado += memoria[i];
+    }
+    printf("Soma total: %f \n",resultado);
 
 }
