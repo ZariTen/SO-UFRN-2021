@@ -4,24 +4,36 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define PI 3.1416
+
 int a,b,n,t; // a-b: inicio e fim da função | n: numero trapezios | t: numero threads
+double memoria[50];
 
-
+//Limites a=0.0 b=10.0
 double f1(double x){
     return 5.0;
 }
 
+//Limites a=0.0 b=2.0*PI
 double f2(double x){
     return sin(2.0 * x) + cos(5.0 * x);    
 }
 
 void* trap_area(void *idThread){
-    int local_a,local_b,local_n;
-    printf("Thread %d\n",(int)(size_t)idThread);
-    //Solução 2
-    //double h = (local_b-local_a)/local_n;
-    pthread_exit(NULL);
+    int local_a,local_b;
+    double local_n = t/n;
+    printf("Thread %d \n",(int)(size_t)idThread);
 
+    double h = (local_b-local_a)/local_n;
+    double area_total = (f1(local_a)+f1(local_b))/2;
+    for(int i = 1; i < local_n; i++){
+        double x_i = local_a + i*h;
+        area_total += f1(x_i);
+    }
+    area_total = h*area_total;
+    memoria[(int)(size_t)idThread] = area_total;
+
+    pthread_exit(NULL);
 }
 
 int main(int argc, char *argv[]){
@@ -31,13 +43,12 @@ int main(int argc, char *argv[]){
     }
     t =  atoi(argv[1]);
     n = atoi(argv[2]);
-    double memoria[t];
     pthread_t threads[t];
     int i;
     void *thread_return;
 
     for (i = 0; i < t; i++){
-        int pcreate = pthread_create(&threads[i],NULL,trap_area, (void*)(size_t)i);
+        int pcreate = pthread_create(&threads[i],NULL,trap_area,(void*)(size_t)i);
 
         if(pcreate != 0){
             return 1;
