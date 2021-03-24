@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.14.1, 2021-03-22T11:44:15. -->
+<!-- Written by QtCreator 4.14.2, 2021-03-24T14:07:30. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -292,8 +292,9 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/wheados/Documentos/Código QT5 Ubuntu - Trem/Trem.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/wheados/Documentos/Código QT5 Ubuntu - Trem/Trem.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Trem2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/wheados/Documentos/Git-Projects/SO-UFRN-2021/2.1-trem/Trem.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/wheados/Documentos/Git-Projects/SO-UFRN-2021/2.1-trem/Trem.pro</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>

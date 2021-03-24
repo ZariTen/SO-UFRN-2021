@@ -10,9 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //Cria o trem com seu (ID, posição X, posição Y)
     trem1 = new Trem(1,60,90);
     trem2 = new Trem(2,460,30);
-    trem3 = new Trem(3,870,90);
-    trem4 = new Trem(4,310,270);
-    trem5 = new Trem(5,610,270);
+    //trem3 = new Trem(3,870,90);
+    //trem4 = new Trem(4,310,270);
+    //trem5 = new Trem(5,610,270);
 
     /*
      * Conecta o sinal UPDATEGUI à função UPDATEINTERFACE.
@@ -23,9 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
      */
     connect(trem1,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
     connect(trem2,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
-    connect(trem3,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
-    connect(trem4,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
-    connect(trem5,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
+    //connect(trem3,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
+    //connect(trem4,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
+    //connect(trem5,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
 
 
 }
@@ -65,9 +65,9 @@ void MainWindow::on_pushButton_clicked()
 {
     trem1->start();
     trem2->start();
-    trem3->start();
-    trem4->start();
-    trem5->start();
+    //trem3->start();
+    //trem4->start();
+    //trem5->start();
 }
 
 /*
@@ -77,7 +77,17 @@ void MainWindow::on_pushButton_2_clicked()
 {
     trem1->terminate();
     trem2->terminate();
-    trem3->terminate();
-    trem4->terminate();
-    trem5->terminate();
+    //trem3->terminate();
+    //trem4->terminate();
+    //trem5->terminate();
+}
+
+void MainWindow::on_t1Speed_sliderMoved(int position)
+{
+    trem1->velocidade = (100-position);
+}
+
+void MainWindow::on_t2Speed_sliderMoved(int position)
+{
+   trem2->velocidade = (100-position);
 }
