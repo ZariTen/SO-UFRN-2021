@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     trem2 = new Trem(2,460,30);
     trem3 = new Trem(3,870,90);
     trem4 = new Trem(4,310,270);
-    //trem5 = new Trem(5,610,270);
+    trem5 = new Trem(5,610,270);
 
     /*
      * Conecta o sinal UPDATEGUI à função UPDATEINTERFACE.
@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(trem2,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
     connect(trem3,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
     connect(trem4,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
-    //connect(trem5,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
+    connect(trem5,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
 
 
 }
@@ -67,7 +67,7 @@ void MainWindow::on_pushButton_clicked()
     trem2->start();
     trem3->start();
     trem4->start();
-    //trem5->start();
+    trem5->start();
 }
 
 /*
@@ -79,7 +79,7 @@ void MainWindow::on_pushButton_2_clicked()
     trem2->terminate();
     trem3->terminate();
     trem4->terminate();
-    //trem5->terminate();
+    trem5->terminate();
 }
 
 void MainWindow::on_t1Speed_sliderMoved(int position)

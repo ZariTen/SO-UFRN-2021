@@ -83,47 +83,53 @@ void Trem::run(){
             }
             else if (x == 870 && y < 150)
                 y+=10;
-            else if (x > 620 && y == 150)
+            else if (x > 600 && y == 150){
+                if(x==620){t2t3.lock();}
                 x-=10;
+            }
             else{
                 //Zona critica (T2)
-                t2t3.lock();
-                for(;y!=30;){
-                    if(x>600){x-=10;}
-                    else{y-=10;}
-                    emit updateGUI(ID,x,y);
-                    msleep(velocidade);
-                }
+                y-=10;
             }
             emit updateGUI(ID, x,y);    //Emite um sinal
             break;
         case 4: //Trem 4
             if (y == 150 && x < 460){
                 if(x==350){t1t4.unlock();}
-                if(x==310){t2t4.lock();}
+                if(x==440){t4t5.lock();}
                 x+=10;
             }
             else if (x == 460 && y < 270){
                 if(y==170){t2t4.unlock();}
                 y+=10;
             }
-            else if (x > 190 && y == 270)
+            else if (x > 190 && y == 270){
+                if(x==440){t4t5.unlock();}
                 x-=10;
+            }
             else{
                 y-=10;
                 if (y==160){t1t4.lock();}
+                if (y==160){t2t4.lock();}
             }
             emit updateGUI(ID, x,y);    //Emite um sinal
             break;
         case 5: //Trem 5
-            if (y == 150 && x < 730)
+            if (y == 150 && x < 730){
+                //if(x==580){t3t5.lock();}
+                if(x==480){t4t5.unlock();}
                 x+=10;
+            }
             else if (x == 730 && y < 270)
                 y+=10;
-            else if (x > 460 && y == 270)
+            else if (x > 460 && y == 270){
+                if(x==480){t4t5.lock();}
                 x-=10;
-            else
+            }
+            else{
+                //if(y==170){t2t5.lock();}
                 y-=10;
+            }
             emit updateGUI(ID, x,y);    //Emite um sinal
             break;
 
