@@ -424,6 +424,25 @@
      <string>Trem 2</string>
     </property>
    </widget>
+   <widget class="QSlider" name="t3Speed">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>380</y>
+      <width>160</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>50</number>
+    </property>
+    <property name="sliderPosition">
+     <number>50</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
    <zorder>label_trilho1</zorder>
    <zorder>label_trilho2</zorder>
    <zorder>label_trilho3</zorder>
@@ -450,6 +469,7 @@
    <zorder>t2Speed</zorder>
    <zorder>labelT1</zorder>
    <zorder>labelT2</zorder>
+   <zorder>t3Speed</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -457,7 +477,7 @@
      <x>0</x>
      <y>0</y>
      <width>890</width>
-     <height>30</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
