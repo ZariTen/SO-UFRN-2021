@@ -23,27 +23,29 @@ Trem::Trem(int ID, int x, int y){
 //Função a ser executada após executar trem->START
 void Trem::run(){
     t1t2.unlock();
+    t1t4.unlock();
+    t2t3.unlock();
+    t2t4.unlock();
+    t2t5.unlock();
+    t3t5.unlock();
+    t4t5.unlock();
     while(true){
         switch(ID){
         case 1:     //Trem 1
-            if (y == 30 && x <310)
+            if (y == 30 && x <330){
+                if(x==310){t1t2.lock();}
+                if(x==320){t1t4.lock();}
                 x+=10;
-            else if ((x == 310 || x==330) && y < 150){
+            }
+            else if (x==330 && y < 150){
                 //Zona crítica (T2)
-                t1t2.lock();
-                for(; y != 150;){
-                    if (x<330){x+=10;}
-                    else{y+=10;}
-                    if(x==320){t1t4.lock();}
-                    emit updateGUI(ID,x,y);
-                    msleep(velocidade);
-                }
+                y+=10;
             }
             else if (x > 160 && y == 150){
                 //Zona critica (T4)
                 x-=10;
                 if (x == 320) {t1t2.unlock();}
-                if (x == 200) {t1t4.unlock();}
+                if (x == 180) {t1t4.unlock();}
             }
             else if (x > 60 && y == 150)
                 x-=10;
@@ -52,33 +54,25 @@ void Trem::run(){
             emit updateGUI(ID, x,y);    //Emite um sinal
             break;
         case 2: //Trem 2
-            if (y == 30 && x <580){
+            if (y == 30 && x <600){
                 if(x==360){t1t2.unlock();}
+                if(x==590){t2t3.lock();}
                 x+=10;
             }
-            else if (x == 580 && y < 150){
+            else if (x == 600 && y < 150){
                 //Zona critica (T3)
-                t2t3.lock();
-                for(;y!=150;){
-                    if(x<600){x+=10;}
-                    else{y+=10;}
-                    emit updateGUI(ID,x,y);
-                    msleep(velocidade);
-                }
+                y+=10;
             }
-            else if (x > 350 && y == 150){
+            else if (x > 330 && y == 150){
                 if(x==580){t2t3.unlock();}
+                if(x==350){t1t2.lock();}
+                if(x==480){t2t4.lock();}
                 x-=10;
             }
             else{
                 //Zona critica (T1)
-                t1t2.lock();
-                for (; y != 30;){
-                    if (x>330){x-=10;}
-                    else{y-=10;}
-                    emit updateGUI(ID,x,y);
-                    msleep(velocidade);
-                }
+                if(y==120){t2t4.unlock();}
+                y-=10;
             }
             emit updateGUI(ID, x,y);    //Emite um sinal
             break;
@@ -106,10 +100,13 @@ void Trem::run(){
         case 4: //Trem 4
             if (y == 150 && x < 460){
                 if(x==350){t1t4.unlock();}
+                if(x==310){t2t4.lock();}
                 x+=10;
             }
-            else if (x == 460 && y < 270)
+            else if (x == 460 && y < 270){
+                if(y==170){t2t4.unlock();}
                 y+=10;
+            }
             else if (x > 190 && y == 270)
                 x-=10;
             else{
