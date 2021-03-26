@@ -38,11 +38,9 @@ void Trem::run(){
                 x+=10;
             }
             else if (x==330 && y < 150){
-                //Zona crítica (T2)
                 y+=10;
             }
             else if (x > 160 && y == 150){
-                //Zona critica (T4)
                 x-=10;
                 if (x == 320) {t1t2.unlock();}
                 if (x == 180) {t1t4.unlock();}
@@ -57,12 +55,11 @@ void Trem::run(){
             if (y == 30 && x <600){
                 if(x==360){t1t2.unlock();}
                 if(x==590){t2t3.lock();}
+                if(x==590){t2t5.lock();}
+                if(x==590){t2t4.lock();}
                 x+=10;
             }
             else if (x == 600 && y < 150){
-                //Zona critica (T3)
-                if(y==130){t2t5.lock();}
-                if(y==140){t2t4.lock();}
                 y+=10;
             }
             else if (x > 330 && y == 150){
@@ -72,7 +69,6 @@ void Trem::run(){
                 x-=10;
             }
             else{
-                //Zona critica (T1)
                 if(y==120){t2t4.unlock();}
                 y-=10;
             }
@@ -87,10 +83,11 @@ void Trem::run(){
                 y+=10;
             else if (x > 600 && y == 150){
                 if(x==620){t2t3.lock();}
+                if(x==750){t3t5.lock();}
                 x-=10;
             }
             else{
-                //Zona critica (T2)
+                if(y==130){t3t5.unlock();}
                 y-=10;
             }
             emit updateGUI(ID, x,y);    //Emite um sinal
@@ -119,18 +116,20 @@ void Trem::run(){
         case 5: //Trem 5
             if (y == 150 && x < 730){
                 if(x==480){t4t5.unlock();}
-                //if(x==580){t3t5.lock();}
                 if(x==620){t2t5.unlock();}
                 x+=10;
             }
-            else if (x == 730 && y < 270)
+            else if (x == 730 && y < 270){
+                if(y==160){t3t5.unlock();}
                 y+=10;
+            }
             else if (x > 460 && y == 270){
                 if(x==480){t4t5.lock();}
                 x-=10;
             }
             else{
                 if(y==170){t2t5.lock();}
+                if(y==170){t3t5.lock();}
                 y-=10;
             }
             emit updateGUI(ID, x,y);    //Emite um sinal
