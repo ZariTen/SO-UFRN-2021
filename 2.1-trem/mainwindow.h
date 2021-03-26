@@ -31,6 +31,10 @@ private slots:
 
     void on_t3Speed_sliderMoved(int position);
 
+    void on_t4Speed_sliderMoved(int position);
+
+    void on_t5Speed_sliderMoved(int position);
+
 private:
     Ui::MainWindow *ui;
 
