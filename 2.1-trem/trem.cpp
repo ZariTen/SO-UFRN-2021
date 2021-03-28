@@ -54,9 +54,9 @@ void Trem::run(){
         case 2: //Trem 2
             if (y == 30 && x <600){
                 if(x==360){t1t2.unlock();}
-                if(x==590){t2t3.lock();}
-                if(x==590){t2t5.lock();}
-                if(x==590){t2t4.lock();}
+                if(x==580){t2t3.lock();}
+                if(x==570){t2t5.lock();}
+                if(x==560){t2t4.lock();}
                 x+=10;
             }
             else if (x == 600 && y < 150){
